@@ -1,5 +1,3 @@
-from typing import Annotated
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -41,13 +39,13 @@ def retrieve_city(city_id: int, db: Session = Depends(get_db)) -> schemas.City:
 @router.put("/cities/{city_id}/", response_model=schemas.City)
 def update_city(
     city_id: int,
-    city_schema: Annotated[schemas.CityCreateUpdate, Depends()],
+    city_schema: schemas.CityCreateUpdate,
     db: Session = Depends(get_db)
 ) -> schemas.City:
 
     crud.city_exists(db=db, city_id=city_id)
 
-    if crud.get_city_by_name(db=db, city_name=city_schema.name):
+    if crud.get_city_by_name(db=db, city_name=city_schema.name).id != city_id:
         raise HTTPException(
             status_code=400,
             detail=f"City with name {city_schema.name} already exists!"

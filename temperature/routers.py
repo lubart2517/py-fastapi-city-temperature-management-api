@@ -11,6 +11,11 @@ router = APIRouter()
 
 
 @router.get("/temperatures/", response_model=list[schemas.Temperature])
+def read_temperatures(db: Session = Depends(get_db)):
+    return crud.get_temperatures(db=db)
+
+
+@router.get("/temperatures/{city_id}", response_model=list[schemas.Temperature])
 def read_temperatures(city_id: int | None = None, db: Session = Depends(get_db)):
     return crud.get_temperatures(db=db, city_id=city_id)
 
