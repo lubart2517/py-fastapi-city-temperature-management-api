@@ -1,5 +1,5 @@
 # Temperature API
-Simple API on FastAPI for storing data on temperature levels in cities across the world.
+Simple API on FastAPI for storing temperature in cities across the world.
 
 ## Installation
 ### Configue .env according to .env.sample
@@ -22,4 +22,4 @@ uvicorn main:app
 ### II. Temperatures
 * `POST /temperatures/update`: Create new temperature records for all cities in the database.
 * `GET /temperatures`: Get a list of all temperature records.
-* `GET /temperatures/?city_id={city_id}`: Get the temperature records for a specific city.
+* `GET /temperatures/{city_id}`: Get the temperature records for a specific city.
