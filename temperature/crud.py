@@ -43,7 +43,7 @@ async def get_city_temp(url: str, params: dict, client) -> int:
     return data["current"]["temp_c"]
 
 
-async def set_temps(db: Session) -> dict:
+async def set_temps(db: Session) -> None:
     db_cities = city_crud.get_all_cities(db=db)
     city_names = [city.name for city in db_cities]
 
@@ -67,6 +67,6 @@ async def set_temps(db: Session) -> dict:
             temp_schema = schemas.TemperatureBase(
                 city_id=db_cities[i].id,
                 date_time=datetime.datetime.now(tz=TIME_ZONE),
-                temperature=temperatures[i]
+                temperature=int(temperatures[i])
             )
             create_temperature(db=db, temp_schema=temp_schema)
